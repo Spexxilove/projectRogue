@@ -15,8 +15,7 @@
 
 const FName AProjectRoguePawn::MoveForwardBinding("MoveForward");
 const FName AProjectRoguePawn::MoveRightBinding("MoveRight");
-const FName AProjectRoguePawn::FireForwardBinding("FireForward");
-const FName AProjectRoguePawn::FireRightBinding("FireRight");
+const FName AProjectRoguePawn::FireBinding("Fire");
 
 AProjectRoguePawn::AProjectRoguePawn()
 {	
@@ -59,8 +58,8 @@ void AProjectRoguePawn::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	// set up gameplay key bindings
 	PlayerInputComponent->BindAxis(MoveForwardBinding);
 	PlayerInputComponent->BindAxis(MoveRightBinding);
-	PlayerInputComponent->BindAxis(FireForwardBinding);
-	PlayerInputComponent->BindAxis(FireRightBinding);
+	PlayerInputComponent->BindAction(FireBinding, EInputEvent::IE_Pressed, this, &AProjectRoguePawn::Fire);
+
 }
 
 void AProjectRoguePawn::Tick(float DeltaSeconds)
@@ -89,14 +88,38 @@ void AProjectRoguePawn::Tick(float DeltaSeconds)
 			RootComponent->MoveComponent(Deflection, NewRotation, true);
 		}
 	}
-	
-	// Create fire direction vector
-	const float FireForwardValue = GetInputAxisValue(FireForwardBinding);
-	const float FireRightValue = GetInputAxisValue(FireRightBinding);
-	const FVector FireDirection = FVector(FireForwardValue, FireRightValue, 0.f);
 
-	// Try and fire a shot
-	FireShot(FireDirection);
+	// Aim
+	UpdateRotation();
+	
+}
+
+void AProjectRoguePawn::UpdateRotation()
+{
+	
+	// rotate towards target
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+	if (!ensure(PlayerController))
+		return;
+
+	// Get the coordinates of the mouse from our controller  
+	float LocationX;
+	float LocationY;
+	PlayerController->GetMousePosition(LocationX, LocationY);
+	// Do a trace and see if there the position intersects something in the world  
+	FVector2D MousePosition(LocationX, LocationY);
+	FHitResult HitResult;
+	const bool bTraceComplex = false;
+
+	if (PlayerController->GetHitResultAtScreenPosition(MousePosition, ECC_Visibility, bTraceComplex, HitResult) == true) {
+		FVector TargetLocation = HitResult.Location;
+		FVector ActorLocation = this->ActorToWorld().GetLocation();
+		// set z difference to 0 to always shoot horizontal
+		TargetLocation.Z = ActorLocation.Z;
+
+		RotateTowards(TargetLocation - ActorLocation);
+	}
+	
 }
 
 void AProjectRoguePawn::FireShot(FVector FireDirection)
@@ -135,5 +158,19 @@ void AProjectRoguePawn::FireShot(FVector FireDirection)
 void AProjectRoguePawn::ShotTimerExpired()
 {
 	bCanFire = true;
+}
+
+void AProjectRoguePawn::Fire()
+{
+	// Create fire direction vector
+	const FVector FireDirection = this->GetActorForwardVector();
+
+	// Try and fire a shot
+	FireShot(FireDirection);
+}
+
+void AProjectRoguePawn::RotateTowards(FVector AimDirection)
+{
+	this->SetActorRotation(AimDirection.ToOrientationRotator());
 }
 

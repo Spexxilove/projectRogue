@@ -44,6 +44,9 @@ public:
 
 	// Begin Actor Interface
 	virtual void Tick(float DeltaSeconds) override;
+
+	
+
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End Actor Interface
 
@@ -56,10 +59,17 @@ public:
 	// Static names for axis bindings
 	static const FName MoveForwardBinding;
 	static const FName MoveRightBinding;
-	static const FName FireForwardBinding;
-	static const FName FireRightBinding;
+	static const FName FireBinding;
 
 private:
+	/** Fire a shoot forwards **/
+	void Fire();
+
+	/** aim towards Vector direction **/
+	void RotateTowards(FVector AimDirection);
+
+	/** update aiming rotation depending on input **/
+	void UpdateRotation();
 
 	/* Flag to control firing  */
 	uint32 bCanFire : 1;
