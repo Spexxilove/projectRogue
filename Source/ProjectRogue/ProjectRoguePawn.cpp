@@ -13,18 +13,20 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundBase.h"
 
+
 const FName AProjectRoguePawn::MoveForwardBinding("MoveForward");
 const FName AProjectRoguePawn::MoveRightBinding("MoveRight");
 const FName AProjectRoguePawn::FireBinding("Fire");
 
-AProjectRoguePawn::AProjectRoguePawn()
+AProjectRoguePawn::AProjectRoguePawn():ABasePawn()
 {	
+	
 	static ConstructorHelpers::FObjectFinder<UStaticMesh> ShipMesh(TEXT("/Game/TwinStick/Meshes/TwinStickUFO.TwinStickUFO"));
 	// Create the mesh component
-	ShipMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ShipMesh"));
-	RootComponent = ShipMeshComponent;
-	ShipMeshComponent->SetCollisionProfileName(UCollisionProfile::Pawn_ProfileName);
-	ShipMeshComponent->SetStaticMesh(ShipMesh.Object);
+	
+	
+	MeshComponent->SetCollisionProfileName(UCollisionProfile::Pawn_ProfileName);
+	MeshComponent->SetStaticMesh(ShipMesh.Object);
 	
 	// Cache our sound effect
 	static ConstructorHelpers::FObjectFinder<USoundBase> FireAudio(TEXT("/Game/TwinStick/Audio/TwinStickFire.TwinStickFire"));
@@ -64,6 +66,10 @@ void AProjectRoguePawn::SetupPlayerInputComponent(class UInputComponent* PlayerI
 
 void AProjectRoguePawn::Tick(float DeltaSeconds)
 {
+	Super::Tick(DeltaSeconds);
+
+	UE_LOG(LogTemp, Warning, TEXT("TICK"));
+
 	// Find movement direction
 	const float ForwardValue = GetInputAxisValue(MoveForwardBinding);
 	const float RightValue = GetInputAxisValue(MoveRightBinding);
