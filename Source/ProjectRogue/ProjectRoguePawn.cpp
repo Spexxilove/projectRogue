@@ -45,11 +45,10 @@ AProjectRoguePawn::AProjectRoguePawn():ABasePawn()
 	CameraComponent->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	CameraComponent->bUsePawnControlRotation = false;	// Camera does not rotate relative to arm
 
-	// Movement
-	MoveSpeed = 1000.0f;
+
 	// Weapon
 	GunOffset = FVector(90.f, 0.f, 0.f);
-	FireRate = 0.1f;
+	
 	bCanFire = true;
 }
 
@@ -68,7 +67,7 @@ void AProjectRoguePawn::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
 
-	UE_LOG(LogTemp, Warning, TEXT("TICK"));
+	
 
 	// Find movement direction
 	const float ForwardValue = GetInputAxisValue(MoveForwardBinding);
@@ -78,7 +77,7 @@ void AProjectRoguePawn::Tick(float DeltaSeconds)
 	const FVector MoveDirection = FVector(ForwardValue, RightValue, 0.f).GetClampedToMaxSize(1.0f);
 
 	// Calculate  movement
-	const FVector Movement = MoveDirection * MoveSpeed * DeltaSeconds;
+	const FVector Movement = MoveDirection * MoveSpeed->GetCurrentValue() * DeltaSeconds;
 
 	// If non-zero size, move this actor
 	if (Movement.SizeSquared() > 0.0f)
@@ -148,7 +147,7 @@ void AProjectRoguePawn::FireShot(FVector FireDirection)
 			}
 
 			bCanFire = false;
-			World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AProjectRoguePawn::ShotTimerExpired, FireRate);
+			World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AProjectRoguePawn::ShotTimerExpired, FireRate->GetCurrentValue());
 
 			// try and play the sound if specified
 			if (FireSound != nullptr)

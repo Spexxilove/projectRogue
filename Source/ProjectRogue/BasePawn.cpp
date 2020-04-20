@@ -11,6 +11,9 @@ ABasePawn::ABasePawn()
 	PrimaryActorTick.bCanEverTick = true;
 	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	RootComponent = MeshComponent;
+
+	FireRate = CreateDefaultSubobject<UUnitModifiableStatComponent>(TEXT("FireRateComponent"));
+	MoveSpeed = CreateDefaultSubobject<UUnitModifiableStatComponent>(TEXT("MoveSpeedComponent"));
 }
 
 

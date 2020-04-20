@@ -4,7 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "UnitModifiableStat.h"
 #include "BasePawn.generated.h"
+
 
 UCLASS()
 class PROJECTROGUE_API ABasePawn : public APawn
@@ -19,11 +21,11 @@ public:
 
 	/* How fast the weapon will fire */
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-	float FireRate;
+	UUnitModifiableStatComponent* FireRate;
 
 	/* The speed of the character */
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-	float MoveSpeed;
+	UUnitModifiableStatComponent* MoveSpeed;
 
 	/* The mesh component */
 	UPROPERTY(Category = Mesh, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
