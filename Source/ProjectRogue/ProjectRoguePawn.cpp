@@ -48,8 +48,8 @@ AProjectRoguePawn::AProjectRoguePawn():ABasePawn()
 
 	// Weapon
 	GunOffset = FVector(90.f, 0.f, 0.f);
-	
 	bCanFire = true;
+
 }
 
 void AProjectRoguePawn::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)

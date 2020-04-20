@@ -12,8 +12,15 @@ UUnitModifiableStatComponent::UUnitModifiableStatComponent()
 }
 
 
+
+
 UUnitModifiableStatComponent::~UUnitModifiableStatComponent()
 {
+}
+
+void UUnitModifiableStatComponent::Initialize(float BaseValue)
+{
+	this->BaseStat = BaseValue;
 }
 
 void UUnitModifiableStatComponent::ChangeAddedValue(float amount)
@@ -44,6 +51,7 @@ float UUnitModifiableStatComponent::Update()
 {
 	float OldValue = CurrentValue;
 	CurrentValue = (BaseStat + AddedValue) * Multiplier;
+	UE_LOG(LogTemp, Warning, TEXT("ValueUpdate Old: %f New %f"), OldValue, CurrentValue);
 	if (OldValue != CurrentValue) {
 		ChangedEvent.Broadcast(OldValue, CurrentValue);
 	}

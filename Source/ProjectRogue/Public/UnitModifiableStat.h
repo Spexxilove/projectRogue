@@ -5,6 +5,9 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "UnitModifiableStat.generated.h"
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FChangedEvent, float, OldValue, float, NewValue);
+
 /**
  * 
  */
@@ -15,16 +18,20 @@ class UUnitModifiableStatComponent : public UActorComponent
 
 public:
 	/** Broadcasts whenever the layer changes */
-	DECLARE_EVENT_TwoParams(FLayerViewModel, FChangedEvent, float, float)
-	FChangedEvent& OnChanged(float OldValue, float NewValue) { return ChangedEvent; }
+	FChangedEvent& OnChanged() { return ChangedEvent; }
 
+	UFUNCTION(BlueprintCallable)
 	void ChangeAddedValue(float amount);
 
+	UFUNCTION(BlueprintCallable)
 	void ChangeMultiplier(float amount);
 
+	UFUNCTION(BlueprintCallable)
 	float GetCurrentValue();
 
 	void Reset();
+
+	void Initialize(float BaseValue);
 
 protected:
 	// Called when the game starts
@@ -45,21 +52,22 @@ private:
 	float Multiplier =1;
 
 	UPROPERTY(EditDefaultsOnly)
-	float MaxAddedValue = 0;
+	float MaxAddedValue = 100;
 
 	UPROPERTY(EditDefaultsOnly)
-	float MinAddedValue = 100;
+	float MinAddedValue = 0;
 
 	UPROPERTY(EditDefaultsOnly)
 	float MaxMultiplierValue = 10;
 
 	UPROPERTY(EditDefaultsOnly)
-	float MinMultiplierValue = 1;
+	float MinMultiplierValue = 0;
 
 	UPROPERTY(VisibleAnywhere)
-	float CurrentValue;
+	float CurrentValue =1;
 
 	/** Broadcasts whenever the current value changes */
+	UPROPERTY(BlueprintAssignable)
 	FChangedEvent ChangedEvent;
 
 	float Update();
