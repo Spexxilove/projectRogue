@@ -17,7 +17,7 @@ class UUnitModifiableStatComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
-	/** Broadcasts whenever the layer changes */
+	/** Broadcasts whenever the value changes */
 	FChangedEvent& OnChanged() { return ChangedEvent; }
 
 	UFUNCTION(BlueprintCallable)

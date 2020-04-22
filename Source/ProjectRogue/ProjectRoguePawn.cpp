@@ -12,6 +12,7 @@
 #include "Engine/StaticMesh.h"
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundBase.h"
+#include "UnitModifiableStat.h"
 
 
 const FName AProjectRoguePawn::MoveForwardBinding("MoveForward");

@@ -2,6 +2,8 @@
 
 
 #include "BasePawn.h"
+#include "UnitModifiableStat.h"
+#include "Health_Component.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -12,8 +14,11 @@ ABasePawn::ABasePawn()
 	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
 	RootComponent = MeshComponent;
 
+	//default stats
 	FireRate = CreateDefaultSubobject<UUnitModifiableStatComponent>(TEXT("FireRateComponent"));
 	MoveSpeed = CreateDefaultSubobject<UUnitModifiableStatComponent>(TEXT("MoveSpeedComponent"));
+
+	Health = CreateDefaultSubobject<UHealth_Component>(TEXT("HealthComponent"));
 }
 
 

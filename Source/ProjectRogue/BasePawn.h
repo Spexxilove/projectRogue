@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "UnitModifiableStat.h"
 #include "BasePawn.generated.h"
 
 
@@ -21,11 +20,15 @@ public:
 
 	/* How fast the weapon will fire */
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-	UUnitModifiableStatComponent* FireRate;
+	class UUnitModifiableStatComponent* FireRate = nullptr;
 
 	/* The speed of the character */
 	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
-	UUnitModifiableStatComponent* MoveSpeed;
+	class UUnitModifiableStatComponent* MoveSpeed = nullptr;
+
+	/* The health of the character */
+	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+	class UHealth_Component* Health = nullptr;
 
 	/* The mesh component */
 	UPROPERTY(Category = Mesh, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
