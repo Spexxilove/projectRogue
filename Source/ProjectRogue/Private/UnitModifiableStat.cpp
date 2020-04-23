@@ -11,9 +11,6 @@ UUnitModifiableStatComponent::UUnitModifiableStatComponent()
 	this->CurrentValue = (BaseStat + AddedValue) * Multiplier;
 }
 
-
-
-
 UUnitModifiableStatComponent::~UUnitModifiableStatComponent()
 {
 }

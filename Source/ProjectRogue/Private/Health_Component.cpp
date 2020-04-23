@@ -19,13 +19,16 @@ UHealth_Component::UHealth_Component()
 
 void UHealth_Component::TakeDamage(float Amount)
 {
+	
 	bool Death = CurrentHealth - Amount <= 0;
 	if (Death) {
 		CurrentHealth = 0;
 		DeathEvent.Broadcast();
+		UE_LOG(LogTemp, Warning, TEXT("DEATH: %f"), CurrentHealth)
 	}
 	else {
 		CurrentHealth = CurrentHealth - Amount;
+		UE_LOG(LogTemp, Warning, TEXT("new health: %f"), CurrentHealth)
 	}
 }
 

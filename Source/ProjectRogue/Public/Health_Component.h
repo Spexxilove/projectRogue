@@ -42,6 +42,7 @@ private:
 	UPROPERTY(BlueprintAssignable)
 	FDeathEvent DeathEvent;
 
+	UFUNCTION()
 	void HandleOnMaxHealthChanged(float OldValue, float NewValue);
 		
 };

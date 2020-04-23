@@ -6,6 +6,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Engine/StaticMesh.h"
+#include "BasePawn.h"
+#include "Health_Component.h"
 
 AProjectRogueProjectile::AProjectRogueProjectile() 
 {
@@ -39,6 +41,11 @@ void AProjectRogueProjectile::OnHit(UPrimitiveComponent* HitComp, AActor* OtherA
 	if ((OtherActor != NULL) && (OtherActor != this) && (OtherComp != NULL) && OtherComp->IsSimulatingPhysics())
 	{
 		OtherComp->AddImpulseAtLocation(GetVelocity() * 20.0f, GetActorLocation());
+	}
+
+	ABasePawn* OtherPawn = Cast<ABasePawn>(OtherActor);
+	if (OtherPawn){
+		OtherPawn->Health->TakeDamage(1);
 	}
 
 	Destroy();
