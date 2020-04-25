@@ -41,7 +41,7 @@ protected:
 private:
 	// raw base stat. should not change
 	UPROPERTY(EditDefaultsOnly)
-	float BaseStat;
+	float BaseStat = 1;
 
 	// overall added value
 	UPROPERTY(VisibleAnywhere)
