@@ -87,7 +87,7 @@ float UFiringComponent::GetReloadTime()
 void UFiringComponent::Fire()
 {
 	if (CanFire()) {
-		auto Projectile = GetWorld()->SpawnActor<AProjectRogueProjectile>(ProjectileBlueprint, GetOwner()->GetActorTransform().GetRelativeTransform(BulletSpawnPoint));
+		auto Projectile = GetWorld()->SpawnActor<AProjectRogueProjectile>(ProjectileBlueprint, BulletSpawnPoint*GetOwner()->GetActorTransform());
 		LastFireTime = GetWorld()->GetTimeSeconds();
 	}
 }
