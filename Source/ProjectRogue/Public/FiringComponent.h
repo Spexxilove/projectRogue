@@ -26,17 +26,26 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectRogueProjectile> ProjectileBlueprint;
 
+	/* transform where the projectile is spawned */
+	FTransform BulletSpawnPoint;
+
 public:	
-	// Sets default values for this component's properties
-	UFiringComponent();
+	
+	UFUNCTION(BlueprintCallable)
+	void SetBulletSpawnPoint(FTransform SpawnPointTransform);
 
-
+	UFUNCTION(BlueprintCallable)
+	void Fire();
 
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 public:	
+
+	// Sets default values for this component's properties
+	UFiringComponent();
+
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
@@ -48,7 +57,6 @@ public:
 
 	float GetReloadTime();
 
-	void Fire();
 
 
 private:

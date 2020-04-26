@@ -18,6 +18,11 @@ UFiringComponent::UFiringComponent()
 }
 
 
+void UFiringComponent::SetBulletSpawnPoint(FTransform SpawnPointTransform)
+{
+	BulletSpawnPoint = SpawnPointTransform;
+}
+
 // Called when the game starts
 void UFiringComponent::BeginPlay()
 {
@@ -82,7 +87,7 @@ float UFiringComponent::GetReloadTime()
 void UFiringComponent::Fire()
 {
 	if (CanFire()) {
-		//TODO: actually fire
+		auto Projectile = GetWorld()->SpawnActor<AProjectRogueProjectile>(ProjectileBlueprint, GetOwner()->GetActorTransform().GetRelativeTransform(BulletSpawnPoint));
 		LastFireTime = GetWorld()->GetTimeSeconds();
 	}
 }
