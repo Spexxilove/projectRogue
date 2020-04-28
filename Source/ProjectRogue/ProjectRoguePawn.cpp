@@ -13,6 +13,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "Sound/SoundBase.h"
 #include "UnitModifiableStat.h"
+#include "FiringComponent.h"
+#include "Components/ArrowComponent.h"
 
 
 const FName AProjectRoguePawn::MoveForwardBinding("MoveForward");
@@ -50,7 +52,11 @@ AProjectRoguePawn::AProjectRoguePawn():ABasePawn()
 	// Weapon
 	GunOffset = FVector(90.f, 0.f, 0.f);
 	bCanFire = true;
+	FiringComponent = CreateDefaultSubobject<UFiringComponent>(TEXT("Gun"));
+	UArrowComponent* BulletSpawnPosition = CreateDefaultSubobject<UArrowComponent>(TEXT("BulletSpawnPoint"));
+	BulletSpawnPosition->SetRelativeLocation(GunOffset);
 
+	FiringComponent->SetBulletSpawnPoint(BulletSpawnPosition->GetRelativeTransform());
 }
 
 void AProjectRoguePawn::SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent)
@@ -67,8 +73,6 @@ void AProjectRoguePawn::SetupPlayerInputComponent(class UInputComponent* PlayerI
 void AProjectRoguePawn::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
-
-	
 
 	// Find movement direction
 	const float ForwardValue = GetInputAxisValue(MoveForwardBinding);
@@ -128,38 +132,6 @@ void AProjectRoguePawn::UpdateRotation()
 	
 }
 
-void AProjectRoguePawn::FireShot(FVector FireDirection)
-{
-	// If it's ok to fire again
-	if (bCanFire == true)
-	{
-		// If we are pressing fire stick in a direction
-		if (FireDirection.SizeSquared() > 0.0f)
-		{
-			const FRotator FireRotation = FireDirection.Rotation();
-			// Spawn projectile at an offset from this pawn
-			const FVector SpawnLocation = GetActorLocation() + FireRotation.RotateVector(GunOffset);
-
-			UWorld* const World = GetWorld();
-			if (World != NULL)
-			{
-				// spawn the projectile
-				World->SpawnActor<AProjectRogueProjectile>(SpawnLocation, FireRotation);
-			}
-
-			bCanFire = false;
-			World->GetTimerManager().SetTimer(TimerHandle_ShotTimerExpired, this, &AProjectRoguePawn::ShotTimerExpired, FireRate->GetCurrentValue());
-
-			// try and play the sound if specified
-			if (FireSound != nullptr)
-			{
-				UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
-			}
-
-			bCanFire = false;
-		}
-	}
-}
 
 void AProjectRoguePawn::ShotTimerExpired()
 {
@@ -168,11 +140,8 @@ void AProjectRoguePawn::ShotTimerExpired()
 
 void AProjectRoguePawn::Fire()
 {
-	// Create fire direction vector
-	const FVector FireDirection = this->GetActorForwardVector();
-
-	// Try and fire a shot
-	FireShot(FireDirection);
+	// Try and Fire shot
+	FiringComponent->Fire();
 }
 
 void AProjectRoguePawn::RotateTowards(FVector AimDirection)

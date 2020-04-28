@@ -19,6 +19,9 @@ class AProjectRoguePawn : public ABasePawn
 	UPROPERTY(Category = Camera, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class USpringArmComponent* CameraBoom;
 
+	UPROPERTY(Category = Firing, VisibleAnywhere, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
+	class UFiringComponent* FiringComponent = nullptr;
+
 public:
 	AProjectRoguePawn();
 
@@ -38,9 +41,6 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
 	// End Actor Interface
-
-	/* Fire a shot in the specified direction */
-	void FireShot(FVector FireDirection);
 
 	/* Handler for the fire timer expiry */
 	void ShotTimerExpired();
