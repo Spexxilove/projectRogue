@@ -19,15 +19,15 @@ public:
 	ABasePawn();
 
 	/* How fast the weapon will fire */
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = Gameplay, VisibleAnywhere, BlueprintReadOnly)
 	class UUnitModifiableStatComponent* FireRate = nullptr;
 
 	/* The speed of the character */
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = Gameplay, VisibleAnywhere, BlueprintReadOnly)
 	class UUnitModifiableStatComponent* MoveSpeed = nullptr;
 
 	/* The health of the character */
-	UPROPERTY(Category = Gameplay, EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(Category = Gameplay, VisibleAnywhere, BlueprintReadOnly)
 	class UHealth_Component* Health = nullptr;
 
 	/* The mesh component */

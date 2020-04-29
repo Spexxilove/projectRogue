@@ -12,7 +12,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FChangedEvent, float, OldValue, flo
  * 
  */
 UCLASS()
-class UUnitModifiableStatComponent : public UActorComponent
+class PROJECTROGUE_API UUnitModifiableStatComponent : public UActorComponent
 {
 	GENERATED_BODY()
 

@@ -60,7 +60,7 @@ public:
 
 
 private:
-
+	UFUNCTION()
 	void HandleOnParentFireRateChanged(float OldValue, float NewValue);
 
 	void SetModifiedReloadTime(float StatModifier);
