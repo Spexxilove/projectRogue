@@ -10,7 +10,7 @@ class UProjectileMovementComponent;
 class UStaticMeshComponent;
 
 UCLASS(config=Game)
-class AProjectRogueProjectile : public AActor
+class PROJECTROGUE_API AProjectRogueProjectile : public AActor
 {
 	GENERATED_BODY()
 

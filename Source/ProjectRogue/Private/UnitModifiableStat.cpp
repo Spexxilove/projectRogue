@@ -32,7 +32,7 @@ void UUnitModifiableStatComponent::ChangeMultiplier(float amount)
 	Update();
 }
 
-float UUnitModifiableStatComponent::GetCurrentValue()
+float UUnitModifiableStatComponent::GetCurrentValue() const
 {
 	return CurrentValue;
 }

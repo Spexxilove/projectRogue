@@ -40,7 +40,7 @@ void UHealth_Component::Heal(float Amount)
 	}
 }
 
-bool UHealth_Component::IsHealable()
+bool UHealth_Component::IsHealable() const
 {
 	return  CurrentHealth < MaxHealth->GetCurrentValue();
 }

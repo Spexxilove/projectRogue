@@ -18,7 +18,7 @@ UFiringComponent::UFiringComponent()
 }
 
 
-void UFiringComponent::SetBulletSpawnPoint(FTransform SpawnPointTransform)
+void UFiringComponent::SetBulletSpawnPoint(const FTransform& SpawnPointTransform)
 {
 	BulletSpawnPoint = SpawnPointTransform;
 }
@@ -54,12 +54,12 @@ void UFiringComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActo
 	// ...
 }
 
-bool UFiringComponent::CanFire()
+bool UFiringComponent::CanFire() const
 {
 	return LastFireTime + ModifiedReloadTime <= GetWorld()->GetTimeSeconds();
 }
 
-float UFiringComponent::GetReloadProgressPercentage()
+float UFiringComponent::GetReloadProgressPercentage() const
 {
 	if (CanFire()) {
 		return 1.0f;
@@ -69,7 +69,7 @@ float UFiringComponent::GetReloadProgressPercentage()
 	return  (CurrentTime - LastFireTime) / ModifiedReloadTime;
 }
 
-float UFiringComponent::GetRemainingReloadTime()
+float UFiringComponent::GetRemainingReloadTime() const
 {
 	if (CanFire()) {
 		return 0.0f;
@@ -79,7 +79,7 @@ float UFiringComponent::GetRemainingReloadTime()
 	return ModifiedReloadTime - (CurrentTime - LastFireTime);
 }
 
-float UFiringComponent::GetReloadTime()
+float UFiringComponent::GetReloadTime() const
 {
 	return ModifiedReloadTime;
 }

@@ -27,7 +27,7 @@ public:
 	void ChangeMultiplier(float amount);
 
 	UFUNCTION(BlueprintCallable)
-	float GetCurrentValue();
+	float GetCurrentValue() const;
 
 	void Reset();
 

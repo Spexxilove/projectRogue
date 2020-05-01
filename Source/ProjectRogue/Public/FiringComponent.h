@@ -23,8 +23,7 @@ private:
 	/*Reload time with modifiers in seconds*/
 	float ModifiedReloadTime = 1;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	TSubclassOf<AProjectRogueProjectile> ProjectileBlueprint;
+	
 
 	/* transform where the projectile is spawned */
 	FTransform BulletSpawnPoint;
@@ -32,7 +31,7 @@ private:
 public:	
 	
 	UFUNCTION(BlueprintCallable)
-	void SetBulletSpawnPoint(FTransform SpawnPointTransform);
+	void SetBulletSpawnPoint(const FTransform& SpawnPointTransform);
 
 	UFUNCTION(BlueprintCallable)
 	void Fire();
@@ -40,6 +39,9 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AProjectRogueProjectile> ProjectileBlueprint;
 
 public:	
 
@@ -49,13 +51,13 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-	bool CanFire();
+	bool CanFire() const;
 
-	float GetReloadProgressPercentage();
+	float GetReloadProgressPercentage() const;
 
-	float GetRemainingReloadTime();
+	float GetRemainingReloadTime() const;
 
-	float GetReloadTime();
+	float GetReloadTime() const;
 
 
 

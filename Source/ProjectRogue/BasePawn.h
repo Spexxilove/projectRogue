@@ -15,8 +15,6 @@ class PROJECTROGUE_API ABasePawn : public APawn
 	
 
 public:
-	// Sets default values for this character's properties
-	ABasePawn();
 
 	/* How fast the weapon will fire */
 	UPROPERTY(Category = Gameplay, VisibleAnywhere, BlueprintReadOnly)
@@ -34,11 +32,10 @@ public:
 	UPROPERTY(Category = Mesh, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
 	class UStaticMeshComponent* MeshComponent;
 
-protected:
-
-
 public:	
 
+	// Sets default values for this character's properties
+	ABasePawn();
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;

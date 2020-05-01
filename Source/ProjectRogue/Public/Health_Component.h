@@ -24,7 +24,7 @@ public:
 
 	void Heal(float Amount);
 
-	bool IsHealable();
+	bool IsHealable() const;
 
 protected:
 	// Called when the game starts
