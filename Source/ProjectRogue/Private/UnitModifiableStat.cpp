@@ -48,7 +48,7 @@ float UUnitModifiableStatComponent::Update()
 {
 	float OldValue = CurrentValue;
 	CurrentValue = (BaseStat + AddedValue) * Multiplier;
-	UE_LOG(LogTemp, Warning, TEXT("ValueUpdate Old: %f New %f"), OldValue, CurrentValue);
+	UE_LOG(LogTemp, Warning, TEXT("[%s] ValueUpdate Old: %f New %f"), *GetName(), OldValue, CurrentValue);
 	if (OldValue != CurrentValue) {
 		ChangedEvent.Broadcast(OldValue, CurrentValue);
 	}

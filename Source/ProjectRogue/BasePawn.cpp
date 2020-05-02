@@ -3,7 +3,7 @@
 
 #include "BasePawn.h"
 #include "UnitModifiableStat.h"
-#include "Health_Component.h"
+#include "HealthComponent.h"
 
 // Sets default values
 ABasePawn::ABasePawn()
@@ -17,7 +17,7 @@ ABasePawn::ABasePawn()
 	FireRate = CreateDefaultSubobject<UUnitModifiableStatComponent>(TEXT("FireRateComponent"));
 	MoveSpeed = CreateDefaultSubobject<UUnitModifiableStatComponent>(TEXT("MoveSpeedComponent"));
 
-	Health = CreateDefaultSubobject<UHealth_Component>(TEXT("HealthComponent"));
+	Health = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
 }
 
 

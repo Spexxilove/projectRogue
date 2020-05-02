@@ -26,7 +26,7 @@ public:
 
 	/* The health of the character */
 	UPROPERTY(Category = Gameplay, VisibleAnywhere, BlueprintReadOnly)
-	class UHealth_Component* Health = nullptr;
+	class UHealthComponent* Health = nullptr;
 
 	/* The mesh component */
 	UPROPERTY(Category = Mesh, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))

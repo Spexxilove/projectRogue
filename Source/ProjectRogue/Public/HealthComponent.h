@@ -4,23 +4,28 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
-#include "Health_Component.generated.h"
+#include "HealthComponent.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDeathEvent);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FDamageTakenEvent, float, DamageAmount, bool, IsDead);
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
-class PROJECTROGUE_API UHealth_Component : public UActorComponent
+class PROJECTROGUE_API UHealthComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
 	// Sets default values for this component's properties
-	UHealth_Component();
+	UHealthComponent();
 
 	/** Broadcasts whenthe Unit reaches zero health */
 	FDeathEvent& OnChanged() { return DeathEvent; }
 
 	void TakeDamage(float Amount);
+
+	/** Broadcasts when the Unit takes damage */
+	FDamageTakenEvent& OnDamageTaken() { return DamageTakenEvent; }
 
 	void Heal(float Amount);
 
@@ -41,6 +46,10 @@ private:
 	/** Broadcasts whenthe Unit reaches zero health */
 	UPROPERTY(BlueprintAssignable)
 	FDeathEvent DeathEvent;
+
+	/** Broadcasts when the Unit takes damage */
+	UPROPERTY(BlueprintAssignable)
+	FDamageTakenEvent DamageTakenEvent;
 
 	UFUNCTION()
 	void HandleOnMaxHealthChanged(float OldValue, float NewValue);

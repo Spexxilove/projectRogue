@@ -16,12 +16,12 @@ private:
 
 	/*Base reload time in seconds*/
 	UPROPERTY(EditDefaultsOnly)
-	float baseReloadTime = 1;
+	float baseReloadTime;
 
-	float LastFireTime = 0;
+	float LastFireTime;
 
 	/*Reload time with modifiers in seconds*/
-	float ModifiedReloadTime = 1;
+	float ModifiedReloadTime;
 
 	
 

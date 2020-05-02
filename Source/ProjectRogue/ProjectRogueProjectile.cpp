@@ -7,7 +7,7 @@
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Engine/StaticMesh.h"
 #include "BasePawn.h"
-#include "Health_Component.h"
+#include "HealthComponent.h"
 
 AProjectRogueProjectile::AProjectRogueProjectile() 
 {
