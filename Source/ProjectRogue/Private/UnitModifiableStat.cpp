@@ -6,9 +6,10 @@
 
 
 UUnitModifiableStatComponent::UUnitModifiableStatComponent()
+	
 {
-	this->BaseStat = 1;
-	this->CurrentValue = (BaseStat + AddedValue) * Multiplier;
+	UE_LOG(LogTemp, Warning, TEXT("[%s] created stat"), *GetName());
+	CurrentValue = (BaseStat + AddedValue) * Multiplier;
 }
 
 UUnitModifiableStatComponent::~UUnitModifiableStatComponent()
@@ -56,11 +57,3 @@ float UUnitModifiableStatComponent::Update()
 	return CurrentValue;
 }
 
-// Called when the game starts
-void UUnitModifiableStatComponent::BeginPlay()
-{
-	Super::BeginPlay();
-
-	Update();
-
-}

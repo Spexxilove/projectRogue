@@ -10,7 +10,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDeathEvent);
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FDamageTakenEvent, float, DamageAmount, bool, IsDead);
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
 class PROJECTROGUE_API UHealthComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -35,9 +35,11 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
-protected:
+	//virtual void TickComponent(float deltaTime) override;
+
+public:
 	/* The max health value */
-	UPROPERTY(Category = Gameplay, VisibleAnyWhere, BlueprintReadOnly)
+	UPROPERTY(Category = Gameplay, VisibleAnywhere, BlueprintReadOnly)
 	class UUnitModifiableStatComponent* MaxHealth;
 
 private:

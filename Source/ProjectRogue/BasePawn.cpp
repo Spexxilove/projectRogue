@@ -14,10 +14,18 @@ ABasePawn::ABasePawn()
 	RootComponent = MeshComponent;
 
 	//default stats
-	FireRate = CreateDefaultSubobject<UUnitModifiableStatComponent>(TEXT("FireRateComponent"));
-	MoveSpeed = CreateDefaultSubobject<UUnitModifiableStatComponent>(TEXT("MoveSpeedComponent"));
+	FireRate = CreateDefaultSubobject<UUnitModifiableStatComponent>(TEXT("FireRate"));
+	MoveSpeed = CreateDefaultSubobject<UUnitModifiableStatComponent>(TEXT("MoveSpeed"));
 
-	Health = CreateDefaultSubobject<UHealthComponent>(TEXT("HealthComponent"));
+	Health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
+}
+
+void ABasePawn::BeginPlay()
+{
+	Super::BeginPlay();
+	FireRate->Update();
+	MoveSpeed->Update();
+	
 }
 
 

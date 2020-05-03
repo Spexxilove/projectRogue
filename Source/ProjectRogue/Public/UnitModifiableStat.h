@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Components/ActorComponent.h"
+#include "UObject/Object.h"
 #include "UnitModifiableStat.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FChangedEvent, float, OldValue, float, NewValue);
@@ -11,8 +11,8 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FChangedEvent, float, OldValue, flo
 /**
  * 
  */
-UCLASS()
-class PROJECTROGUE_API UUnitModifiableStatComponent : public UActorComponent
+UCLASS(ClassGroup = (Custom), DefaultToInstanced, EditInlineNew)
+class PROJECTROGUE_API UUnitModifiableStatComponent : public UObject
 {
 	GENERATED_BODY()
 
@@ -33,10 +33,7 @@ public:
 
 	void Initialize(float BaseValue);
 
-protected:
-	// Called when the game starts
-	virtual void BeginPlay() override;
-	
+	float Update();
 
 private:
 	// raw base stat. should not change
@@ -70,7 +67,7 @@ private:
 	UPROPERTY(BlueprintAssignable)
 	FChangedEvent ChangedEvent;
 
-	float Update();
+	
 
 public:
 	UUnitModifiableStatComponent();
