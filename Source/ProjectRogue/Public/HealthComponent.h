@@ -19,8 +19,8 @@ public:
 	// Sets default values for this component's properties
 	UHealthComponent();
 
-	/** Broadcasts whenthe Unit reaches zero health */
-	FDeathEvent& OnChanged() { return DeathEvent; }
+	/** Broadcasts whenthe Unit reaches zero health after taking Damage event*/
+	FDeathEvent& OnDeath() { return DeathEvent; }
 
 	void TakeDamage(float Amount);
 

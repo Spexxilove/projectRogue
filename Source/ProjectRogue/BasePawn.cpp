@@ -14,6 +14,7 @@ ABasePawn::ABasePawn()
 	RootComponent = MeshComponent;
 
 	//default stats
+	//TODO: move to own Stats component
 	FireRate = CreateDefaultSubobject<UUnitModifiableStatComponent>(TEXT("FireRate"));
 	MoveSpeed = CreateDefaultSubobject<UUnitModifiableStatComponent>(TEXT("MoveSpeed"));
 
@@ -23,9 +24,11 @@ ABasePawn::ABasePawn()
 void ABasePawn::BeginPlay()
 {
 	Super::BeginPlay();
+
 	FireRate->Update();
 	MoveSpeed->Update();
-	
+
+	Health->OnDeath().AddDynamic(this, &ABasePawn::HandleOnDeath);
 }
 
 
@@ -36,5 +39,10 @@ void ABasePawn::BeginPlay()
 void ABasePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	
+}
+
+void ABasePawn::HandleOnDeath()
+{
+	Destroy();
 }
 
