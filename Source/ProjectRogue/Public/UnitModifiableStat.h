@@ -11,7 +11,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FChangedEvent, float, OldValue, flo
 /**
  * 
  */
-UCLASS(ClassGroup = (Custom), DefaultToInstanced, EditInlineNew)
+UCLASS(ClassGroup = (Custom), DefaultToInstanced)
 class PROJECTROGUE_API UUnitModifiableStatComponent : public UObject
 {
 	GENERATED_BODY()

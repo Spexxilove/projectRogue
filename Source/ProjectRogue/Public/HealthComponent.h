@@ -39,7 +39,7 @@ protected:
 
 public:
 	/* The max health value */
-	UPROPERTY(Category = Gameplay, VisibleAnywhere, BlueprintReadOnly)
+	UPROPERTY(Category = Gameplay, VisibleAnywhere, BlueprintReadOnly, Instanced)
 	class UUnitModifiableStatComponent* MaxHealth;
 
 private:
