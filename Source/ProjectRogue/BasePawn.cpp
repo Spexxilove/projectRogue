@@ -46,3 +46,7 @@ void ABasePawn::HandleOnDeath()
 	Destroy();
 }
 
+void ABasePawn::HandleOnDamageTaken(float DamageAmount, bool IsDead)
+{
+}
+

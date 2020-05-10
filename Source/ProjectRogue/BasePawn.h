@@ -46,5 +46,7 @@ public:
 private:
 	UFUNCTION()
 	void HandleOnDeath();
-
+	
+	UFUNCTION()
+	void HandleOnDamageTaken(float DamageAmount, bool IsDead);
 };
