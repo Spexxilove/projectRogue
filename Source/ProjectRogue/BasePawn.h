@@ -4,8 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+
 #include "BasePawn.generated.h"
 
+class UCurveFloat;
+struct FTimeline;
 
 UCLASS()
 class PROJECTROGUE_API ABasePawn : public APawn
@@ -43,10 +46,29 @@ public:
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 
+protected:
+
+	void Tick(float DeltaTime) override;
+
+	FTimeline* MaterialDamageEffectTimeline;
+
+	UPROPERTY(EditDefaultsOnly, Category= "Animation")
+	UCurveFloat* MaterialDamageEffectCurve;
+
+private:
+	UPROPERTY()
+	UMaterialInstanceDynamic* MainMaterialInstance;
+
+
+
+
 private:
 	UFUNCTION()
 	void HandleOnDeath();
 	
 	UFUNCTION()
 	void HandleOnDamageTaken(float DamageAmount, bool IsDead);
+
+	UFUNCTION()
+	void HandleOnDamageEffectUpdate(float EffectIntensityScalar);
 };
