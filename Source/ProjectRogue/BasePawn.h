@@ -39,7 +39,8 @@ public:
 
 	// Sets default values for this character's properties
 	ABasePawn();
-
+	~ABasePawn();
+	
 	void BeginPlay() override;
 
 	// Called to bind functionality to input
@@ -50,6 +51,7 @@ protected:
 
 	void Tick(float DeltaTime) override;
 
+	
 	FTimeline* MaterialDamageEffectTimeline;
 
 	UPROPERTY(EditDefaultsOnly, Category= "Animation")

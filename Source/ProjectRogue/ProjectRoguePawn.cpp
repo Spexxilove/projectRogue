@@ -109,7 +109,7 @@ void AProjectRoguePawn::UpdateRotation()
 	
 	// rotate towards target
 	APlayerController* PlayerController = Cast<APlayerController>(GetController());
-	if (!ensure(PlayerController))
+	if (!PlayerController)
 		return;
 
 	// Get the coordinates of the mouse from our controller  

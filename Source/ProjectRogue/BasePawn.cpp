@@ -9,7 +9,8 @@
 
 
 // Sets default values
-ABasePawn::ABasePawn()
+ABasePawn::ABasePawn():
+	MaterialDamageEffectTimeline(new FTimeline)
 {	
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -25,13 +26,18 @@ ABasePawn::ABasePawn()
 	Health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
 }
 
+ABasePawn::~ABasePawn()
+{
+	delete MaterialDamageEffectTimeline;
+}
+
 void ABasePawn::BeginPlay()
 {
 	Super::BeginPlay();
 
 	MainMaterialInstance = MeshComponent->CreateAndSetMaterialInstanceDynamic(0);
 
-	MaterialDamageEffectTimeline = new FTimeline();
+	//MaterialDamageEffectTimeline = new FTimeline();
 	if (MaterialDamageEffectCurve) {
 		FOnTimelineFloat TimelineCallback;
 		TimelineCallback.BindUFunction(this, FName("HandleOnDamageEffectUpdate"));
