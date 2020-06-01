@@ -15,21 +15,20 @@ ABasePawn::ABasePawn():
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Mesh"));
-	RootComponent = MeshComponent;
+	SetRootComponent(MeshComponent);
 	
 
 	//default stats
 	//TODO: move to own Stats component
-	FireRate = CreateDefaultSubobject<UUnitModifiableStatComponent>(TEXT("FireRate"));
-	MoveSpeed = CreateDefaultSubobject<UUnitModifiableStatComponent>(TEXT("MoveSpeed"));
+	/*FireRate = CreateDefaultSubobject<FUnitModifiableStatComponent>(TEXT("FireRate"));
+	MoveSpeed = CreateDefaultSubobject<FUnitModifiableStatComponent>(TEXT("MoveSpeed"));*/
 
 	Health = CreateDefaultSubobject<UHealthComponent>(TEXT("Health"));
+
+	
 }
 
-ABasePawn::~ABasePawn()
-{
-	delete MaterialDamageEffectTimeline;
-}
+
 
 void ABasePawn::BeginPlay()
 {
@@ -45,8 +44,8 @@ void ABasePawn::BeginPlay()
 	}
 
 	// update stats
-	FireRate->Update();
-	MoveSpeed->Update();
+	FireRate.Update();
+	MoveSpeed.Update();
 
 	// bind health events
 	Health->OnDeath().AddDynamic(this, &ABasePawn::HandleOnDeath);

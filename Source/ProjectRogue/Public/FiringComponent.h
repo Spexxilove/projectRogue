@@ -3,10 +3,12 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "UnitModifiableStat.h"
 #include "Components/ActorComponent.h"
 #include "FiringComponent.generated.h"
 
 class AProjectRogueProjectile;
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class PROJECTROGUE_API UFiringComponent : public UActorComponent
@@ -23,13 +25,20 @@ private:
 	/*Reload time with modifiers in seconds*/
 	float ModifiedReloadTime;
 
-	
-
 	/* transform where the projectile is spawned */
 	FTransform BulletSpawnPoint;
 
 public:	
 	
+	UPROPERTY(Category = "ShotStats", EditAnywhere, BlueprintReadWrite)
+	FUnitModifiableStat ShotSpeed;
+
+	UPROPERTY(Category = "ShotStats", EditAnywhere, BlueprintReadWrite)
+	FUnitModifiableStat ShotDamage;
+
+	UPROPERTY(Category = "ShotStats", EditAnywhere, BlueprintReadWrite)
+	FUnitModifiableStat ShotScale;
+
 	UFUNCTION(BlueprintCallable)
 	void SetBulletSpawnPoint(const FTransform& SpawnPointTransform);
 

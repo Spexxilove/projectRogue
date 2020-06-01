@@ -37,23 +37,23 @@ void UHealthComponent::TakeDamage(float Amount)
 void UHealthComponent::Heal(float Amount)
 {
 	if (IsHealable()) {
-		float CurrentMaxHealth = MaxHealth->GetCurrentValue();
+		float CurrentMaxHealth = MaxHealth.GetCurrentValue();
 		CurrentHealth = CurrentHealth + Amount > CurrentMaxHealth ? CurrentMaxHealth : CurrentHealth + Amount;
 	}
 }
 
 bool UHealthComponent::IsHealable() const
 {
-	return  CurrentHealth < MaxHealth->GetCurrentValue();
+	return  CurrentHealth < MaxHealth.GetCurrentValue();
 }
 
 // Called when the game starts
 void UHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	MaxHealth->Update();
-	MaxHealth->OnChanged().AddUniqueDynamic(this, &UHealthComponent::HandleOnMaxHealthChanged);
-	CurrentHealth = MaxHealth->GetCurrentValue();
+	MaxHealth.Update();
+	MaxHealth.OnChanged().AddUniqueDynamic(this, &UHealthComponent::HandleOnMaxHealthChanged);
+	CurrentHealth = MaxHealth.GetCurrentValue();
 }
 
 

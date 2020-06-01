@@ -67,7 +67,6 @@ void AProjectRoguePawn::SetupPlayerInputComponent(class UInputComponent* PlayerI
 	PlayerInputComponent->BindAxis(MoveForwardBinding);
 	PlayerInputComponent->BindAxis(MoveRightBinding);
 	PlayerInputComponent->BindAction(FireBinding, EInputEvent::IE_Pressed, this, &AProjectRoguePawn::Fire);
-
 }
 
 void AProjectRoguePawn::Tick(float DeltaSeconds)
@@ -82,7 +81,7 @@ void AProjectRoguePawn::Tick(float DeltaSeconds)
 	const FVector MoveDirection = FVector(ForwardValue, RightValue, 0.f).GetClampedToMaxSize(1.0f);
 
 	// Calculate  movement
-	const FVector Movement = MoveDirection * MoveSpeed->GetCurrentValue() * DeltaSeconds;
+	const FVector Movement = MoveDirection * MoveSpeed.GetCurrentValue() * DeltaSeconds;
 
 	// If non-zero size, move this actor
 	if (Movement.SizeSquared() > 0.0f)

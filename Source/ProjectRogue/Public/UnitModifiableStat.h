@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "UObject/Object.h"
+#include "Kismet/BlueprintFunctionLibrary.h"
 #include "UnitModifiableStat.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FChangedEvent, float, OldValue, float, NewValue);
@@ -11,22 +11,22 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FChangedEvent, float, OldValue, flo
 /**
  * 
  */
-UCLASS(ClassGroup = (Custom), DefaultToInstanced)
-class PROJECTROGUE_API UUnitModifiableStatComponent : public UObject
+USTRUCT(BlueprintType)
+struct PROJECTROGUE_API FUnitModifiableStat
 {
-	GENERATED_BODY()
+	GENERATED_USTRUCT_BODY()
 
 public:
 	/** Broadcasts whenever the value changes */
 	FChangedEvent& OnChanged() { return ChangedEvent; }
 
-	UFUNCTION(BlueprintCallable)
-	void ChangeAddedValue(float amount);
+	
+	void ChangeAddedValue(const float amount);
 
-	UFUNCTION(BlueprintCallable)
-	void ChangeMultiplier(float amount);
+	
+	void ChangeMultiplier(const float amount);
 
-	UFUNCTION(BlueprintCallable)
+	
 	float GetCurrentValue() const;
 
 	void Reset();
@@ -70,6 +70,33 @@ private:
 	
 
 public:
-	UUnitModifiableStatComponent();
-	~UUnitModifiableStatComponent();
+	FUnitModifiableStat();
+
+};
+
+
+UCLASS()
+class UUnitModifiableStatBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
+{
+	GENERATED_BODY()
+
+	UFUNCTION(BlueprintCallable, Category = "UnitModifiableStat|Methods")
+	static void ChangeAddedValue(UPARAM(ref) FUnitModifiableStat& UnitStat, const float amount)
+	{
+		return UnitStat.ChangeAddedValue(amount);
+	};
+
+	UFUNCTION(BlueprintCallable, Category = "UnitModifiableStat|Methods")
+	static void ChangeMultiplier(UPARAM(ref) FUnitModifiableStat& UnitStat, const float amount)
+	{
+		return UnitStat.ChangeMultiplier(amount);
+	};
+
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "UnitModifiableStat|Methods")
+	static float GetCurrentValue(UPARAM(ref) FUnitModifiableStat& UnitStat)
+	{
+		return UnitStat.GetCurrentValue();
+	};
+
 };

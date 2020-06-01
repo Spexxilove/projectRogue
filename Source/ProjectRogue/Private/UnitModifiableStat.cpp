@@ -5,55 +5,54 @@
 #include "Math/UnrealMathUtility.h"
 
 
-UUnitModifiableStatComponent::UUnitModifiableStatComponent()
+FUnitModifiableStat::FUnitModifiableStat()
 	
 {
-	UE_LOG(LogTemp, Warning, TEXT("[%s] created stat"), *GetName());
+	//UE_LOG(LogTemp, Warning, TEXT("created stat"));
 	CurrentValue = (BaseStat + AddedValue) * Multiplier;
 }
 
-UUnitModifiableStatComponent::~UUnitModifiableStatComponent()
-{
-}
 
-void UUnitModifiableStatComponent::Initialize(float BaseValue)
+void FUnitModifiableStat::Initialize(float BaseValue)
 {
 	this->BaseStat = BaseValue;
 }
 
-void UUnitModifiableStatComponent::ChangeAddedValue(float amount)
+void FUnitModifiableStat::ChangeAddedValue(float amount)
 {
 	AddedValue = FMath::Clamp(AddedValue + amount, MinAddedValue, MaxAddedValue);
 	Update();
 }
 
-void UUnitModifiableStatComponent::ChangeMultiplier(float amount)
+void FUnitModifiableStat::ChangeMultiplier(float amount)
 {
 	Multiplier = FMath::Clamp(Multiplier * amount, MinMultiplierValue, MaxMultiplierValue);
 	Update();
 }
 
-float UUnitModifiableStatComponent::GetCurrentValue() const
+float FUnitModifiableStat::GetCurrentValue() const
 {
 	return CurrentValue;
 }
 
-void UUnitModifiableStatComponent::Reset()
+void FUnitModifiableStat::Reset()
 {
 	AddedValue = 0;
 	Multiplier = 1;
 	Update();
 }
 
-float UUnitModifiableStatComponent::Update()
+float FUnitModifiableStat::Update()
 {
 	float OldValue = CurrentValue;
 	CurrentValue = (BaseStat + AddedValue) * Multiplier;
-	UE_LOG(LogTemp, Warning, TEXT("[%s] ValueUpdate Old: %f New %f"), *GetName(), OldValue, CurrentValue);
+	UE_LOG(LogTemp, Warning, TEXT("ValueUpdate Old: %f New %f"),  OldValue, CurrentValue);
 	if (OldValue != CurrentValue) {
 		ChangedEvent.Broadcast(OldValue, CurrentValue);
 	}
 	
 	return CurrentValue;
 }
+
+
 

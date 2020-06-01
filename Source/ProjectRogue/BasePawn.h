@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-
+#include "Public/UnitModifiableStat.h"
 #include "BasePawn.generated.h"
 
 class UCurveFloat;
@@ -20,16 +20,17 @@ class PROJECTROGUE_API ABasePawn : public APawn
 public:
 
 	/* How fast the weapon will fire */
-	UPROPERTY(Category = Gameplay, VisibleAnywhere, BlueprintReadOnly)
-	class UUnitModifiableStatComponent* FireRate = nullptr;
+	UPROPERTY(Category = Gameplay, EditAnyWhere, BlueprintReadWrite)
+	FUnitModifiableStat FireRate;
 
 	/* The speed of the character */
-	UPROPERTY(Category = Gameplay, VisibleAnywhere, BlueprintReadOnly)
-	class UUnitModifiableStatComponent* MoveSpeed = nullptr;
+	UPROPERTY(Category = Gameplay, EditAnyWhere, BlueprintReadWrite)
+	FUnitModifiableStat MoveSpeed;
 
 	/* The health of the character */
 	UPROPERTY(Category = Gameplay, VisibleAnywhere, BlueprintReadOnly)
 	class UHealthComponent* Health = nullptr;
+	
 
 	/* The mesh component */
 	UPROPERTY(Category = Mesh, VisibleDefaultsOnly, BlueprintReadOnly, meta = (AllowPrivateAccess = "true"))
@@ -39,7 +40,6 @@ public:
 
 	// Sets default values for this character's properties
 	ABasePawn();
-	~ABasePawn();
 	
 	void BeginPlay() override;
 
@@ -51,7 +51,7 @@ protected:
 
 	void Tick(float DeltaTime) override;
 
-	
+
 	FTimeline* MaterialDamageEffectTimeline;
 
 	UPROPERTY(EditDefaultsOnly, Category= "Animation")
@@ -60,9 +60,6 @@ protected:
 private:
 	UPROPERTY()
 	UMaterialInstanceDynamic* MainMaterialInstance;
-
-
-
 
 private:
 	UFUNCTION()

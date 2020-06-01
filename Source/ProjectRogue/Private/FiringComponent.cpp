@@ -17,7 +17,6 @@ UFiringComponent::UFiringComponent() :
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
 
 
@@ -38,15 +37,19 @@ void UFiringComponent::BeginPlay()
 		return;
 	}
 
-	UUnitModifiableStatComponent* FireRateStat = ParentActor->FireRate;
-	if (!ensure(FireRateStat)) {
-		return;
-	}
-	SetModifiedReloadTime(FireRateStat->GetCurrentValue());
-	FireRateStat->OnChanged().AddDynamic(this, &UFiringComponent::HandleOnParentFireRateChanged);
-
+	FUnitModifiableStat& FireRateStat = ParentActor->FireRate;
 	
+	SetModifiedReloadTime(FireRateStat.GetCurrentValue());
+	FireRateStat.OnChanged().AddDynamic(this, &UFiringComponent::HandleOnParentFireRateChanged);
+
+	ShotSpeed.Update();
+	ShotScale.Update();
+	ShotDamage.Update();
 }
+
+
+
+
 
 
 // Called every frame
@@ -90,7 +93,14 @@ float UFiringComponent::GetReloadTime() const
 void UFiringComponent::Fire()
 {
 	if (CanFire()) {
-		auto Projectile = GetWorld()->SpawnActor<AProjectRogueProjectile>(ProjectileBlueprint, BulletSpawnPoint*GetOwner()->GetActorTransform());
+		auto Projectile = GetWorld()->SpawnActorDeferred<AProjectRogueProjectile>(ProjectileBlueprint, BulletSpawnPoint*GetOwner()->GetActorTransform(), GetOwner());
+		
+		Projectile->SetDamage(ShotDamage.GetCurrentValue());
+		
+		// set parameters
+		UGameplayStatics::FinishSpawningActor(Projectile, Projectile->GetTransform());
+		
+
 		LastFireTime = GetWorld()->GetTimeSeconds();
 	}
 }

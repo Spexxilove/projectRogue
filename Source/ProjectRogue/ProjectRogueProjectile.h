@@ -22,6 +22,10 @@ class PROJECTROGUE_API AProjectRogueProjectile : public AActor
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Movement, meta = (AllowPrivateAccess = "true"))
 	UProjectileMovementComponent* ProjectileMovement;
 
+private:
+
+	float Damage = 1;
+
 public:
 	AProjectRogueProjectile();
 
@@ -33,5 +37,8 @@ public:
 	FORCEINLINE UStaticMeshComponent* GetProjectileMesh() const { return ProjectileMesh; }
 	/** Returns ProjectileMovement subobject **/
 	FORCEINLINE UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+
+	float GetDamage() const { return Damage; }
+	void SetDamage(float val) { Damage = val; }
 };
 
